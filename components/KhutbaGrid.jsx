@@ -2,15 +2,17 @@
 import { useState, useMemo } from 'react'
 import KhutbaCard from './KhutbaCard'
 
-export default function KhutbaGrid({ khutbas, tags, years }) {
-  const [query, setQuery]     = useState('')
-  const [yearFilter, setYear] = useState('all')
-  const [tagFilter, setTag]   = useState('all')
+export default function KhutbaGrid({ khutbas, tags, years, months }) {
+  const [query, setQuery]       = useState('')
+  const [yearFilter, setYear]   = useState('all')
+  const [monthFilter, setMonth] = useState('all')
+  const [tagFilter, setTag]     = useState('all')
 
   const filtered = useMemo(() => {
     let list = khutbas
-    if (yearFilter !== 'all') list = list.filter(k => String(k.year) === yearFilter)
-    if (tagFilter  !== 'all') list = list.filter(k => (k.topic_tags || []).includes(tagFilter))
+    if (yearFilter  !== 'all') list = list.filter(k => String(k.year) === yearFilter)
+    if (monthFilter !== 'all') list = list.filter(k => k.month === monthFilter)
+    if (tagFilter   !== 'all') list = list.filter(k => (k.topic_tags || []).includes(tagFilter))
     if (query.trim()) {
       const q = query.toLowerCase()
       list = list.filter(k =>
@@ -21,9 +23,9 @@ export default function KhutbaGrid({ khutbas, tags, years }) {
       )
     }
     return list
-  }, [khutbas, query, yearFilter, tagFilter])
+  }, [khutbas, query, yearFilter, monthFilter, tagFilter])
 
-  const hasFilter = query || yearFilter !== 'all' || tagFilter !== 'all'
+  const hasFilter = query || yearFilter !== 'all' || monthFilter !== 'all' || tagFilter !== 'all'
 
   return (
     <div>
@@ -52,6 +54,16 @@ export default function KhutbaGrid({ khutbas, tags, years }) {
           {years.map(y => <option key={y} value={y}>{y}</option>)}
         </select>
 
+        {/* Month */}
+        <select
+          className="bg-white border border-border rounded-xl px-3 py-2.5 text-sm text-ink outline-none focus:border-amber cursor-pointer"
+          value={monthFilter}
+          onChange={e => setMonth(e.target.value)}
+        >
+          <option value="all">All months</option>
+          {months.map(m => <option key={m} value={m}>{m}</option>)}
+        </select>
+
         {/* Topic */}
         <select
           className="bg-white border border-border rounded-xl px-3 py-2.5 text-sm text-ink outline-none focus:border-amber cursor-pointer"
@@ -65,7 +77,7 @@ export default function KhutbaGrid({ khutbas, tags, years }) {
         {hasFilter && (
           <button
             className="text-xs text-dim border border-border rounded-xl px-4 py-2.5 bg-white hover:text-amber hover:border-amber transition-colors"
-            onClick={() => { setQuery(''); setYear('all'); setTag('all') }}
+            onClick={() => { setQuery(''); setYear('all'); setMonth('all'); setTag('all') }}
           >
             Clear filters
           </button>

@@ -5,7 +5,8 @@ import {
   getCleanTranscript, getTranscriptJson,
   formatDuration, formatTime,
 } from '../../../lib/data'
-import Transcript from '../../../components/Transcript'
+import Transcript           from '../../../components/Transcript'
+import TranscriptDisclaimer from '../../../components/TranscriptDisclaimer'
 
 export async function generateStaticParams() {
   const ids = await getAllVideoIds()
@@ -38,6 +39,7 @@ export default async function LecturePage({ params }) {
   const tx       = v.channel_id ? await getTranscriptJson(v.channel_id, v.video_id)  : null
   const duration = formatDuration(v.duration_seconds)
   const time     = formatTime(v.post_time)
+  const hasTranscript = Boolean(cleanTxt || tx?.clean_text)
 
   // Title hierarchy: catchy_title (public headline) -> suggested_title (descriptive) -> raw title
   const primaryTitle = v.catchy_title || v.suggested_title || v.title
@@ -74,15 +76,10 @@ export default async function LecturePage({ params }) {
           <p className="text-sm text-dim mb-6">{v.suggested_title}</p>
         )}
 
-        {/* Hadith book + tags */}
-        {(v.hadith_book || v.topic_tags?.length > 0) && (
+        {/* Topic tags (hadith book intentionally not shown here) */}
+        {v.topic_tags?.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-6">
-            {v.hadith_book && (
-              <span className="text-xs text-green bg-green-bg border border-green/20 rounded-full px-3 py-1">
-                {v.hadith_book}{v.hadith_chapter ? ` — ${v.hadith_chapter}` : ''}
-              </span>
-            )}
-            {v.topic_tags?.map(tag => (
+            {v.topic_tags.map(tag => (
               <span
                 key={tag}
                 className="text-xs text-amber-dark bg-amber-bg border border-amber/20 rounded-full px-3 py-1"
@@ -135,6 +132,7 @@ export default async function LecturePage({ params }) {
 
       {/* Transcript */}
       <section className="mb-16">
+        {hasTranscript && <TranscriptDisclaimer />}
         {cleanTxt ? (
           <Transcript text={cleanTxt} videoUrl={v.url} segments={tx?.segments} />
         ) : tx?.clean_text ? (

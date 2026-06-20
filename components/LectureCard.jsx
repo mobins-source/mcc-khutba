@@ -55,15 +55,11 @@ export default function LectureCard({ video: v }) {
           </p>
         )}
 
-        {/* Footer: book / tags + arrow */}
+        {/* Footer: topic tags + arrow */}
         <div className="flex items-end justify-between mt-auto pt-3 border-t border-border/60">
-          {v.hadith_book ? (
-            <span className="text-[10px] text-green bg-green-bg rounded-full px-2 py-0.5">
-              {v.hadith_book}
-            </span>
-          ) : v.topic_tags?.length > 0 ? (
+          {v.topic_tags?.length > 0 ? (
             <div className="flex flex-wrap gap-1">
-              {v.topic_tags.slice(0, 2).map(tag => (
+              {v.topic_tags.slice(0, 3).map(tag => (
                 <span key={tag} className="text-[10px] text-muted bg-warm rounded-full px-2 py-0.5">
                   {tag}
                 </span>

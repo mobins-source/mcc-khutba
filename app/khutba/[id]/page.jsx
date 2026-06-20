@@ -5,7 +5,8 @@ import {
   getCleanTranscript, getTranscriptJson,
   formatDuration, formatTime,
 } from '../../../lib/data'
-import Transcript from '../../../components/Transcript'
+import Transcript           from '../../../components/Transcript'
+import TranscriptDisclaimer from '../../../components/TranscriptDisclaimer'
 
 export async function generateStaticParams() {
   const ids = await getAllKhutbaIds()
@@ -38,6 +39,7 @@ export default async function KhutbaPage({ params }) {
   const tx       = k.channel_id ? await getTranscriptJson(k.channel_id, k.video_id)  : null
   const duration = formatDuration(k.duration_seconds)
   const time     = formatTime(k.post_time)
+  const hasTranscript = Boolean(cleanTxt || tx?.clean_text)
 
   // Title hierarchy: catchy_title (public headline) → suggested_title (descriptive) → raw title
   const primaryTitle = k.catchy_title || k.suggested_title || k.title
@@ -130,6 +132,7 @@ export default async function KhutbaPage({ params }) {
 
       {/* Transcript */}
       <section className="mb-16">
+        {hasTranscript && <TranscriptDisclaimer />}
         {cleanTxt ? (
           <Transcript text={cleanTxt} videoUrl={k.url} segments={tx?.segments} />
         ) : tx?.clean_text ? (
