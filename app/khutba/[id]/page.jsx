@@ -3,7 +3,7 @@ import Link         from 'next/link'
 import {
   getKhutba, getAllKhutbaIds,
   getCleanTranscript, getTranscriptJson,
-  formatDuration, formatTime,
+  formatDuration, formatTime, formatHijriDate,
 } from '../../../lib/data'
 import Transcript           from '../../../components/Transcript'
 import TranscriptDisclaimer from '../../../components/TranscriptDisclaimer'
@@ -39,6 +39,7 @@ export default async function KhutbaPage({ params }) {
   const tx       = k.channel_id ? await getTranscriptJson(k.channel_id, k.video_id)  : null
   const duration = formatDuration(k.duration_seconds)
   const time     = formatTime(k.post_time)
+  const hijri    = formatHijriDate(k.post_date)
   const hasTranscript = Boolean(cleanTxt || tx?.clean_text)
 
   // Title hierarchy: catchy_title (public headline) → suggested_title (descriptive) → raw title
@@ -63,6 +64,17 @@ export default async function KhutbaPage({ params }) {
         <div className="flex flex-wrap items-center gap-2 text-xs text-dim mb-5">
           <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber" />
           <span className="font-medium">{formatDate(k.post_date)}</span>
+          {hijri && (
+            <>
+              <span>·</span>
+              <span
+                className="text-muted"
+                title="Calculated Hijri date — confirm with MCC Tucson for exact religious observance dates"
+              >
+                {hijri}
+              </span>
+            </>
+          )}
           {time     && <><span>·</span><span className="text-blue">{time}</span></>}
           {duration && <><span>·</span><span>{duration}</span></>}
           {k.month_year && <><span>·</span><span>{k.month_year}</span></>}

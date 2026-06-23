@@ -3,7 +3,7 @@ import Link         from 'next/link'
 import {
   getVideo, getAllVideoIds,
   getCleanTranscript, getTranscriptJson,
-  formatDuration, formatTime,
+  formatDuration, formatTime, formatHijriDate,
 } from '../../../lib/data'
 import Transcript           from '../../../components/Transcript'
 import TranscriptDisclaimer from '../../../components/TranscriptDisclaimer'
@@ -39,6 +39,7 @@ export default async function LecturePage({ params }) {
   const tx       = v.channel_id ? await getTranscriptJson(v.channel_id, v.video_id)  : null
   const duration = formatDuration(v.duration_seconds)
   const time     = formatTime(v.post_time)
+  const hijri    = formatHijriDate(v.post_date)
   const hasTranscript = Boolean(cleanTxt || tx?.clean_text)
 
   // Title hierarchy: catchy_title (public headline) -> suggested_title (descriptive) -> raw title
@@ -63,6 +64,17 @@ export default async function LecturePage({ params }) {
         <div className="flex flex-wrap items-center gap-2 text-xs text-dim mb-5">
           <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber" />
           <span className="font-medium">{formatDate(v.post_date)}</span>
+          {hijri && (
+            <>
+              <span>·</span>
+              <span
+                className="text-muted"
+                title="Calculated Hijri date — confirm with MCC Tucson for exact religious observance dates"
+              >
+                {hijri}
+              </span>
+            </>
+          )}
           {time         && <><span>·</span><span className="text-blue">{time}</span></>}
           {duration     && <><span>·</span><span>{duration}</span></>}
           {v.time_slot  && <><span>·</span><span className="text-amber-dark font-medium">{v.time_slot}</span></>}

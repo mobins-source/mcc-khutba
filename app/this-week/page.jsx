@@ -1,4 +1,4 @@
-import { getRecentVideos } from '../../lib/data'
+import { getRecentVideos, formatHijriDate } from '../../lib/data'
 import LectureCard from '../../components/LectureCard'
 
 function formatDateHeader(dateStr) {
@@ -7,7 +7,9 @@ function formatDateHeader(dateStr) {
   const date = new Date(y, m - 1, d)
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-  return `${days[date.getDay()]}, ${months[m - 1]} ${d}`
+  const gregorian = `${days[date.getDay()]}, ${months[m - 1]} ${d}`
+  const hijri = formatHijriDate(dateStr)
+  return { gregorian, hijri }
 }
 
 export const metadata = {
@@ -53,16 +55,27 @@ export default async function ThisWeekPage() {
         </div>
       ) : (
         <div className="space-y-12">
-          {orderedDates.map(date => (
-            <section key={date}>
-              <h2 className="text-sm font-semibold text-ink mb-4 pb-2 border-b border-border">
-                {formatDateHeader(date)}
-              </h2>
-              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {groups[date].map(v => <LectureCard key={v.video_id} video={v} />)}
-              </div>
-            </section>
-          ))}
+          {orderedDates.map(date => {
+            const { gregorian, hijri } = formatDateHeader(date)
+            return (
+              <section key={date}>
+                <h2 className="flex items-baseline gap-2 text-sm font-semibold text-ink mb-4 pb-2 border-b border-border">
+                  <span>{gregorian}</span>
+                  {hijri && (
+                    <span
+                      className="text-xs font-normal text-muted"
+                      title="Calculated Hijri date — confirm with MCC Tucson for exact religious observance dates"
+                    >
+                      · {hijri}
+                    </span>
+                  )}
+                </h2>
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                  {groups[date].map(v => <LectureCard key={v.video_id} video={v} />)}
+                </div>
+              </section>
+            )
+          })}
         </div>
       )}
     </div>
