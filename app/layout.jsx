@@ -1,11 +1,14 @@
 import './globals.css'
+import { getTodayInfo } from '../lib/data'
 
 export const metadata = {
   title:       'MCC Tucson Lectures',
   description: 'Lectures, Friday khutbas, and full transcripts from Muslim Community Center of Tucson',
 }
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const today = await getTodayInfo()
+
   return (
     <html lang="en">
       <body className="min-h-screen bg-cream text-ink">
@@ -15,13 +18,34 @@ export default function RootLayout({ children }) {
 
         {/* Header */}
         <header className="bg-white border-b border-border sticky top-0 z-50 shadow-sm">
-          <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="/" className="group">
+          <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+            <a href="/" className="group flex-shrink-0">
               <div className="font-display font-semibold text-lg text-ink leading-tight group-hover:text-amber transition-colors">
                 MCC Tucson Lectures
               </div>
               <div className="text-[11px] text-muted">Muslim Community Center of Tucson</div>
             </a>
+
+            {/* Today's date / Hijri / sunrise-sunset — hidden on small screens to avoid crowding */}
+            <div className="hidden md:flex flex-col items-end text-right text-[11px] text-muted leading-tight flex-shrink-0">
+              <span>
+                {today.date}
+                {today.hijri && (
+                  <span
+                    title="Calculated Hijri date — confirm with MCC Tucson for exact religious observance dates"
+                  >
+                    {' · '}{today.hijri}
+                  </span>
+                )}
+              </span>
+              {(today.sunrise || today.sunset) && (
+                <span className="mt-0.5">
+                  {today.sunrise && <>☼ {today.sunrise}</>}
+                  {today.sunrise && today.sunset && <span className="mx-1.5">·</span>}
+                  {today.sunset && <>☾ {today.sunset}</>}
+                </span>
+              )}
+            </div>
 
             <nav className="flex items-center gap-2 sm:gap-4">
               <a
