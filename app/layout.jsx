@@ -1,4 +1,5 @@
 import './globals.css'
+import { Analytics } from '@vercel/analytics/next'
 import { getTodayInfo } from '../lib/data'
 import MobileNav from '../components/MobileNav'
 
@@ -113,6 +114,12 @@ export default async function RootLayout({ children }) {
             </a>
             <div className="flex items-center gap-5">
               <a
+                href="/feedback"
+                className="text-xs text-muted hover:text-amber transition-colors"
+              >
+                Feedback
+              </a>
+              <a
                 href="https://mcctucson.org"
                 target="_blank" rel="noreferrer"
                 className="text-xs text-muted hover:text-amber transition-colors"
@@ -129,6 +136,8 @@ export default async function RootLayout({ children }) {
             </div>
           </div>
         </footer>
+
+        <Analytics />
       </body>
     </html>
   )

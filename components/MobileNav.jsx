@@ -6,6 +6,7 @@ const LINKS = [
   { href: '/khutba',    label: 'Khutba Archive' },
   { href: '/library',   label: 'Library' },
   { href: '/study',     label: 'Study Guide' },
+  { href: '/feedback',  label: 'Feedback' },
 ]
 
 const EXTERNAL_LINKS = [
