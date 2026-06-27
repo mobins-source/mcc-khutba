@@ -64,7 +64,7 @@ export default function FeedbackForm() {
   if (status === 'success') {
     return (
       <div className="bg-white border border-border rounded-xl p-8 text-center card-shadow">
-        <div className="text-3xl mb-3 text-green">\u2713</div>
+        <div className="text-3xl mb-3 text-green">✓</div>
         <h2 className="font-display text-lg font-semibold text-ink mb-2">
           Thank you
         </h2>
@@ -113,7 +113,7 @@ export default function FeedbackForm() {
 
       <div>
         <label htmlFor="email" className="block text-xs font-medium text-dim mb-1.5">
-          Email <span className="text-muted">(optional \u2014 only if you&rsquo;d like a reply)</span>
+          Email <span className="text-muted">(optional — only if you&rsquo;d like a reply)</span>
         </label>
         <input
           id="email"
