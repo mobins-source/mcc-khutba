@@ -9,7 +9,7 @@ export default function NotFound() {
         This sermon may not be in the archive yet, or the link may be incorrect.
       </p>
       <a
-        href="/"
+        href="/khutba"
         className="inline-flex items-center gap-2 text-sm font-medium text-white bg-amber hover:bg-amber-dark rounded-xl px-5 py-2.5 transition-colors"
       >
         ← Back to archive

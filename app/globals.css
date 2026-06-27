@@ -9,7 +9,8 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: #FEFCF8;
+  background-image: url('/pattern-star.svg');
+  background-repeat: repeat;
   color: #1C1310;
   font-family: 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;

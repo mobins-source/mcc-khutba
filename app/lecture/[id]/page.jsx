@@ -7,6 +7,7 @@ import {
 } from '../../../lib/data'
 import Transcript           from '../../../components/Transcript'
 import TranscriptDisclaimer from '../../../components/TranscriptDisclaimer'
+import BackLink             from '../../../components/BackLink'
 
 export async function generateStaticParams() {
   const ids = await getAllVideoIds()
@@ -50,13 +51,11 @@ export default async function LecturePage({ params }) {
     <div className="max-w-3xl mx-auto">
 
       {/* Back link */}
-      <Link
-        href="/this-week"
+      <BackLink
+        fallbackHref="/this-week"
+        fallbackLabel="This Week"
         className="inline-flex items-center gap-1.5 text-sm text-dim hover:text-amber transition-colors mb-10 group"
-      >
-        <span className="group-hover:-translate-x-0.5 transition-transform">←</span>
-        This Week
-      </Link>
+      />
 
       {/* Article header */}
       <header className="mb-10">
@@ -160,10 +159,11 @@ export default async function LecturePage({ params }) {
 
       {/* Footer nav */}
       <div className="pt-8 border-t border-border flex items-center justify-between">
-        <Link href="/this-week" className="inline-flex items-center gap-1.5 text-sm text-dim hover:text-amber transition-colors group">
-          <span className="group-hover:-translate-x-0.5 transition-transform">←</span>
-          This Week
-        </Link>
+        <BackLink
+          fallbackHref="/this-week"
+          fallbackLabel="This Week"
+          className="inline-flex items-center gap-1.5 text-sm text-dim hover:text-amber transition-colors group"
+        />
         <a
           href={v.url}
           target="_blank" rel="noreferrer"

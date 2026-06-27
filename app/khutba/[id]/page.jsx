@@ -7,6 +7,7 @@ import {
 } from '../../../lib/data'
 import Transcript           from '../../../components/Transcript'
 import TranscriptDisclaimer from '../../../components/TranscriptDisclaimer'
+import BackLink             from '../../../components/BackLink'
 
 export async function generateStaticParams() {
   const ids = await getAllKhutbaIds()
@@ -50,13 +51,11 @@ export default async function KhutbaPage({ params }) {
     <div className="max-w-3xl mx-auto">
 
       {/* Back link */}
-      <Link
-        href="/"
+      <BackLink
+        fallbackHref="/khutba"
+        fallbackLabel="All sermons"
         className="inline-flex items-center gap-1.5 text-sm text-dim hover:text-amber transition-colors mb-10 group"
-      >
-        <span className="group-hover:-translate-x-0.5 transition-transform">←</span>
-        All sermons
-      </Link>
+      />
 
       {/* Article header */}
       <header className="mb-10">
@@ -160,10 +159,11 @@ export default async function KhutbaPage({ params }) {
 
       {/* Footer nav */}
       <div className="pt-8 border-t border-border flex items-center justify-between">
-        <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-dim hover:text-amber transition-colors group">
-          <span className="group-hover:-translate-x-0.5 transition-transform">←</span>
-          Back to archive
-        </Link>
+        <BackLink
+          fallbackHref="/khutba"
+          fallbackLabel="Back to archive"
+          className="inline-flex items-center gap-1.5 text-sm text-dim hover:text-amber transition-colors group"
+        />
         <a
           href={k.url}
           target="_blank" rel="noreferrer"

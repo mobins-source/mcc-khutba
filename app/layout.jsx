@@ -1,5 +1,6 @@
 import './globals.css'
 import { getTodayInfo } from '../lib/data'
+import MobileNav from '../components/MobileNav'
 
 export const metadata = {
   title:       'MCC Tucson Lectures',
@@ -47,34 +48,51 @@ export default async function RootLayout({ children }) {
               )}
             </div>
 
-            <nav className="flex items-center gap-2 sm:gap-4">
+            <nav className="hidden sm:flex items-center gap-4">
               <a
                 href="/this-week"
-                className="text-xs sm:text-sm font-medium text-dim hover:text-amber transition-colors px-2 py-1"
+                className="text-sm font-medium text-dim hover:text-amber transition-colors px-2 py-1"
               >
                 This Week
               </a>
               <a
-                href="/"
-                className="text-xs sm:text-sm font-medium text-dim hover:text-amber transition-colors px-2 py-1"
+                href="/khutba"
+                className="text-sm font-medium text-dim hover:text-amber transition-colors px-2 py-1"
               >
                 Khutba Archive
               </a>
               <a
+                href="/library"
+                className="text-sm font-medium text-dim hover:text-amber transition-colors px-2 py-1"
+              >
+                Library
+              </a>
+              <a
+                href="/study"
+                className="text-sm font-medium text-dim hover:text-amber transition-colors px-2 py-1"
+              >
+                Study Guide
+              </a>
+              <a
                 href="https://mcctucson.org"
                 target="_blank" rel="noreferrer"
-                className="hidden sm:flex items-center gap-1.5 text-xs text-dim border border-border rounded-full px-4 py-2 hover:border-amber hover:text-amber transition-colors"
+                className="flex items-center gap-1.5 text-xs text-dim border border-border rounded-full px-4 py-2 hover:border-amber hover:text-amber transition-colors"
               >
                 <span>↗</span> mcctucson.org
               </a>
               <a
                 href="https://www.youtube.com/@mcctucson"
                 target="_blank" rel="noreferrer"
-                className="hidden sm:flex items-center gap-1.5 text-xs text-dim border border-border rounded-full px-4 py-2 hover:border-amber hover:text-amber transition-colors"
+                className="flex items-center gap-1.5 text-xs text-dim border border-border rounded-full px-4 py-2 hover:border-amber hover:text-amber transition-colors"
               >
                 <span>↗</span> YouTube
               </a>
             </nav>
+
+            {/* Mobile hamburger — replaces the inline nav below sm, where it no longer fits */}
+            <div className="sm:hidden">
+              <MobileNav />
+            </div>
           </div>
         </header>
 
