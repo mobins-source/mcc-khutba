@@ -1,0 +1,20 @@
+{
+  "book": "Al-Wajeez",
+  "author": "Dr. Abdul-Azeem ibn Badawi al-Khalafi",
+  "_source_note": "Al-Wajeez fi Fiqh as-Sunnah wal-Kitab al-Aziz ('The Concise Presentation of the Fiqh of the Sunnah and the Noble Book'). Structured as major Books (categories of Fiqh) each subdivided into numbered Lessons. This canonical file uses the major Books as chapters — that is the level of granularity the AI enrichment step identifies in hadith_chapter. Chapter numbering follows the book's natural ordering. Sources: SalafiPublications.com translation (Abu Talhah Dawud Burbank), Concise Presentation English translation (Zarabozo), and ittibaa.com chapter extracts.",
+
+  "chapters": [
+    { "number": 1,  "title": "Book of Purification (Taharah)" },
+    { "number": 2,  "title": "Book of Prayer (Salah)" },
+    { "number": 3,  "title": "Book of Fasting (Sawm)" },
+    { "number": 4,  "title": "Book of Zakah" },
+    { "number": 5,  "title": "Book of Pilgrimage (Hajj)" },
+    { "number": 6,  "title": "Book of Business Transactions (Mu'amalaat)" },
+    { "number": 7,  "title": "Book of Marriage (Nikaah)" },
+    { "number": 8,  "title": "Book of Divorce (Talaq)" },
+    { "number": 9,  "title": "Book of Permissible and Impermissible Foods" },
+    { "number": 10, "title": "Book of Inheritance (Faraa'id)" },
+    { "number": 11, "title": "Book of Criminal Offenses (Hudood)" },
+    { "number": 12, "title": "Book of Jihad" }
+  ]
+}
