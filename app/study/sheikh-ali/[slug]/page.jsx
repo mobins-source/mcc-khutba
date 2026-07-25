@@ -95,7 +95,7 @@ export default async function SheikhAliSeriesPage({ params }) {
         <div className="text-center py-24">
           <div className="text-4xl mb-4">◌</div>
           <p className="text-dim">
-            No lectures available yet — the backfill is still in progress.
+            Transcripts for this series haven\'t been fetched yet.
           </p>
         </div>
       ) : (
