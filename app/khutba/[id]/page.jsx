@@ -118,14 +118,14 @@ export default async function KhutbaPage({ params }) {
         <div className="flex-1 border-t border-border" />
       </div>
 
-      {/* Summary */}
-      {k.summary && (
+      {/* Summary — prefer full summary from transcript JSON over the slim index version */}
+      {(tx?.summary || k.summary) && (
         <section className="mb-12">
           <h2 className="text-[11px] font-semibold uppercase tracking-widest text-muted mb-5">
             Summary
           </h2>
           <div className="font-reading text-[16px] text-body leading-relaxed space-y-4">
-            {k.summary.split('\n').filter(Boolean).map((p, i) => (
+            {(tx?.summary || k.summary).split('\n').filter(Boolean).map((p, i) => (
               <p key={i}>{p}</p>
             ))}
           </div>

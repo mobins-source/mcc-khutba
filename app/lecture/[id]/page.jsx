@@ -118,14 +118,14 @@ export default async function LecturePage({ params }) {
         <div className="flex-1 border-t border-border" />
       </div>
 
-      {/* Summary */}
-      {v.summary && (
+      {/* Summary — prefer full summary from transcript JSON over slim index version */}
+      {(tx?.summary || v.summary) && (
         <section className="mb-12">
           <h2 className="text-[11px] font-semibold uppercase tracking-widest text-muted mb-5">
             Summary
           </h2>
           <div className="font-reading text-[16px] text-body leading-relaxed space-y-4">
-            {v.summary.split('\n').filter(Boolean).map((p, i) => (
+            {(tx?.summary || v.summary).split('\n').filter(Boolean).map((p, i) => (
               <p key={i}>{p}</p>
             ))}
           </div>
