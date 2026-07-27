@@ -119,13 +119,15 @@ export default async function SheikhAliSeriesPage({ params }) {
           {videos.map(v => {
             const partNum  = getPartNumber(v.title, series.partPattern)
             const duration = formatDur(v.duration_seconds)
-            // Title: "Part N — [original YouTube title with Part N stripped]"
-            const strippedTitle = v.title
-              .replace(/\|?\s*part\s*\d+\s*/i, '')
-              .replace(/zadul-ma'?ad.*?with\s+sh\.?\s*ali\s*mashhour\s*[-|]?\s*/i, '')
-              .trim()
+            // Title format:
+            //   enriched  → "Part N — {suggested_title}" (fallback to catchy_title)
+            //   un-enriched → "Part N" (just the number, no generic series boilerplate)
+            //   no part number → raw YouTube title as-is
+            const enrichedTitle = v.suggested_title || v.catchy_title || null
             const displayTitle = partNum
-              ? `Part ${partNum} — ${strippedTitle || v.title}`
+              ? enrichedTitle
+                ? `Part ${partNum} — ${enrichedTitle}`
+                : `Part ${partNum}`
               : v.title
 
             return (
