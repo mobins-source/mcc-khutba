@@ -6,7 +6,23 @@ import {
   getAllSheikhAliSeriesSlugs,
   SHEIKH_ALI_SERIES,
 } from '../../../../lib/data'
-import LectureCard from '../../../../components/LectureCard'
+
+// Extract part number from a video title using the series pattern
+function getPartNumber(title, pattern) {
+  if (!title || !pattern) return null
+  const m = title.match(pattern)
+  if (!m) return null
+  const num = m.slice(1).find(g => g != null)
+  return num ? parseInt(num, 10) : null
+}
+
+// Format duration seconds as "1h 23m" or "45m"
+function formatDur(secs) {
+  if (!secs) return null
+  const h = Math.floor(secs / 3600)
+  const m = Math.floor((secs % 3600) / 60)
+  return h > 0 ? `${h}h ${m}m` : `${m}m`
+}
 
 export async function generateStaticParams() {
   return getAllSheikhAliSeriesSlugs().map(slug => ({ slug }))
@@ -90,20 +106,60 @@ export default async function SheikhAliSeriesPage({ params }) {
 
       <div className="border-t border-border mb-10" />
 
-      {/* Empty state */}
+      {/* Lecture list */}
       {videos.length === 0 ? (
         <div className="text-center py-24">
           <div className="text-4xl mb-4">◌</div>
           <p className="text-dim">
-            Transcripts for this series haven\'t been fetched yet.
+            Transcripts for this series haven&apos;t been fetched yet.
           </p>
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {videos.map(v => (
-            <LectureCard key={v.video_id} video={v} />
-          ))}
-        </div>
+        <ol className="divide-y divide-border">
+          {videos.map(v => {
+            const partNum  = getPartNumber(v.title, series.partPattern)
+            const duration = formatDur(v.duration_seconds)
+            // Title: "Part N — [original YouTube title with Part N stripped]"
+            const strippedTitle = v.title
+              .replace(/\|?\s*part\s*\d+\s*/i, '')
+              .replace(/zadul-ma'?ad.*?with\s+sh\.?\s*ali\s*mashhour\s*[-|]?\s*/i, '')
+              .trim()
+            const displayTitle = partNum
+              ? `Part ${partNum} — ${strippedTitle || v.title}`
+              : v.title
+
+            return (
+              <li key={v.video_id}>
+                <Link
+                  href={`/lecture/${v.video_id}`}
+                  className="group flex items-center gap-4 py-3 px-2 hover:bg-warm rounded-lg transition-colors"
+                >
+                  {/* Part number bubble */}
+                  <span className="flex-shrink-0 w-10 text-right text-xs font-medium text-muted tabular-nums">
+                    {partNum ? `${partNum}` : '—'}
+                  </span>
+
+                  {/* Title */}
+                  <span className="flex-1 text-sm text-ink group-hover:text-teal-700 transition-colors leading-snug">
+                    {displayTitle}
+                  </span>
+
+                  {/* Duration */}
+                  {duration && (
+                    <span className="flex-shrink-0 text-xs text-muted tabular-nums">
+                      {duration}
+                    </span>
+                  )}
+
+                  {/* Arrow */}
+                  <span className="flex-shrink-0 text-teal-600 opacity-0 group-hover:opacity-100 transition-opacity text-sm">
+                    →
+                  </span>
+                </Link>
+              </li>
+            )
+          })}
+        </ol>
       )}
     </div>
   )
