@@ -60,13 +60,11 @@ export default async function StudyPage() {
         <p className="text-xs text-dim mb-6 ml-5">
           The Mosque Foundation, Bridgeview, IL
         </p>
-        {series.filter(s => s.slug === 'zadul-maad').length === 0 ? (
+        {series.length === 0 ? (
           <p className="text-dim text-sm">No series available yet.</p>
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {series
-              .filter(s => s.slug === 'zadul-maad')
-              .map(s => <StudySeriesCard key={s.slug} series={s} />)}
+            {series.map(s => <StudySeriesCard key={s.slug} series={s} />)}
           </div>
         )}
       </section>
