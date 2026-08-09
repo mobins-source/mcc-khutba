@@ -11,7 +11,7 @@ const LINKS = [
 
 const EXTERNAL_LINKS = [
   { href: 'https://mcctucson.org',               label: 'mcctucson.org' },
-  { href: 'https://www.youtube.com/@mcctucson',  label: 'YouTube' },
+  { href: 'https://www.youtube.com/@mcctucson/streams',  label: 'YouTube' },
 ]
 
 /**

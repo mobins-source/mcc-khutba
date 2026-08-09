@@ -82,7 +82,7 @@ export default async function RootLayout({ children }) {
                 <span>↗</span> mcctucson.org
               </a>
               <a
-                href="https://www.youtube.com/@mcctucson"
+                href="https://www.youtube.com/@mcctucson/streams"
                 target="_blank" rel="noreferrer"
                 className="flex items-center gap-1.5 text-xs text-dim border border-border rounded-full px-4 py-2 hover:border-amber hover:text-amber transition-colors"
               >
@@ -127,7 +127,7 @@ export default async function RootLayout({ children }) {
                 mcctucson.org
               </a>
               <a
-                href="https://www.youtube.com/@mcctucson"
+                href="https://www.youtube.com/@mcctucson/streams"
                 target="_blank" rel="noreferrer"
                 className="text-xs text-muted hover:text-amber transition-colors"
               >
