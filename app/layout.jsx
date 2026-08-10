@@ -1,5 +1,6 @@
 import './globals.css'
 import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import { getTodayInfo } from '../lib/data'
 import MobileNav from '../components/MobileNav'
 
@@ -138,6 +139,7 @@ export default async function RootLayout({ children }) {
         </footer>
 
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
